@@ -1,0 +1,14 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+peewee = "==2.*"
+"4d70523" = {file = "https://github.com/fact-project/erna/archive/slurm.tar.gz"}
+
+[dev-packages]
+
+[requires]
+python_version = "3.6"
