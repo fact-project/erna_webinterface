@@ -15,13 +15,12 @@ RUN apt-get update -qq \
 ENV LC_ALL="en_US.UTF-8"
 ENV LANG="en_US.UTF-8"
 
-
 COPY Pipfile* /opt/erna_webinterface/
 
 WORKDIR /opt/erna_webinterface
 
 RUN python3 -m pip install pipenv \
-	&& python3 -m pipenv install
+	&& python3 -m pipenv install --deploy --system
 
 COPY erna_webinterface /opt/erna_webinterface/erna_webinterface
-CMD FLASK_APP=erna_webinterface pipenv run flask run --host='0.0.0.0'
+CMD pipenv run gunicorn -b 0.0.0.0:5000 erna_webinterface:app

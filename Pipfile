@@ -7,6 +7,7 @@ name = "pypi"
 flask = "*"
 peewee = "==2.*"
 "4d70523" = {file = "https://github.com/fact-project/erna/archive/slurm.tar.gz"}
+gunicorn = "*"
 
 [dev-packages]
 
