@@ -2,8 +2,19 @@ from flask import Flask, render_template, jsonify
 import yaml
 import os
 import peewee
+from collections import defaultdict
 
 from erna.automatic_processing.database import Job, ProcessingState, XML, Jar, database
+
+sortkey = defaultdict(
+    int,
+    walltime_exceeded=-1,
+    failed=-2,
+    inserted=0,
+    queued=1,
+    running=2,
+    success=3,
+)
 
 
 with open(os.environ.get('ERNAWEB_CONFIG', 'erna_web.yaml')) as f:
@@ -34,6 +45,7 @@ def index():
 @app.route('/states')
 def states():
     states = [p.description for p in ProcessingState.select()]
+    states = sorted(states, key=lambda k: sortkey[k])
     return jsonify({'status': 'success', 'states': states})
 
 

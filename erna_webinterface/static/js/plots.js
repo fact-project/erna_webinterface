@@ -63,7 +63,15 @@ function initPlots(states) {
     traces.push(trace);
   })
   
-  let layout = {barmode: 'stack'};
+  let layout = {
+    barmode: 'stack',
+    legend: {
+      orientation: 'h'
+    },
+    margin: {
+      t: 15
+    }
+  };
 
   Plotly.newPlot(jobs, traces, layout, {responsive: true});
   console.log(traces);
