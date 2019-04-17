@@ -6,6 +6,7 @@ let colors = {
   failed: 'crimson',
   success: 'green',
   walltime_exceeded: 'OrangeRed',
+  input_file_missing: 'DarkRed',
   running: 'black',
   queued: 'Gray',
   inserted: 'LightGray',

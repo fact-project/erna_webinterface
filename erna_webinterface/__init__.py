@@ -10,6 +10,7 @@ sortkey = defaultdict(
     int,
     walltime_exceeded=-1,
     failed=-2,
+    input_file_missing=-3,
     inserted=0,
     queued=1,
     running=2,
