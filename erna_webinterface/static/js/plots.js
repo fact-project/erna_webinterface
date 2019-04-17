@@ -12,6 +12,16 @@ let colors = {
   inserted: 'LightGray',
 }
 
+let labels = {
+  failed: 'failed',
+  success: 'success',
+  walltime_exceeded: 'walltime',
+  input_file_missing: 'missing input',
+  running: 'running',
+  queued: 'queued',
+  inserted: 'created',
+}
+
 function getStates() {
   return fetch('/states').then(response => {
     if (response.status >= 400) {throw response.statusText;}
@@ -54,7 +64,7 @@ function initPlots(states) {
     let trace = {
       x: [''],
       y: [0],
-      name: state,
+      name: labels[state],
       type: 'bar',
     };
 
