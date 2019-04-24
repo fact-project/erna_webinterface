@@ -9,6 +9,22 @@
 
     <main>
       <h2>Job Overview</h2>
+
+      <form>
+        <select name="version">
+          <option value="all">all</option>
+          {% for version in versions%}
+          <option
+            value="{{ version }}"
+            {% if version == selected %}selected{% endif %}
+          >
+            {{ version }}
+          </option>
+          {% endfor %}
+        </select>
+        <input type="submit">
+      </form>
+
       <div id="jobs" style="width: 100%; height: 500px;"></div>
     </main>
 

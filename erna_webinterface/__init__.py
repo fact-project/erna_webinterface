@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import yaml
 import os
 import peewee
@@ -40,7 +40,9 @@ def _db_close(exc):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    selected = request.args.get('version')
+    versions = [j.version for j in Jar.select(Jar.version)]
+    return render_template('index.html', versions=versions, selected=selected)
 
 
 @app.route('/states')
@@ -52,7 +54,7 @@ def states():
 
 @app.route('/jobstats')
 def jobstats():
-    jobstats = list(
+    q = (
         ProcessingState.select(
             ProcessingState.description,
             Jar.version,
@@ -64,6 +66,10 @@ def jobstats():
         .switch(Job)
         .join(Jar)
         .group_by(Jar.version, XML.name, ProcessingState.description)
-        .dicts()
+        .order_by(Jar.version, XML.name)
     )
+    if request.args.get('version') and request.args['version'] != 'all':
+        q = q.where(Jar.version == request.args['version'])
+
+    jobstats = list(q.dicts())
     return jsonify({'status': 'success', 'jobstats': jobstats})

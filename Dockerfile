@@ -23,4 +23,4 @@ RUN python3 -m pip install pipenv \
 	&& python3 -m pipenv install --deploy --system
 
 COPY erna_webinterface /opt/erna_webinterface/erna_webinterface
-CMD pipenv run gunicorn -b 0.0.0.0:5000 erna_webinterface:app
+CMD gunicorn -b 0.0.0.0:5000 erna_webinterface:app

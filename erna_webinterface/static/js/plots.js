@@ -33,7 +33,8 @@ function getStates() {
 }
 
 function updateJobStats() {
-  fetch('/jobstats').then(response => {
+  let query = window.location.search;
+  fetch('/jobstats' + query).then(response => {
     if (response.status >= 400) {throw response.statusText;}
     return response.json();
   }).then(newData => {
@@ -54,6 +55,7 @@ function updateJobStats() {
     });
 
     Plotly.restyle(jobs, update);
+    Plotly.relayout(jobs, {'yaxis.autorange': true});
     console.log('Update done');
   }).catch(err => {console.log(err);});
 }
@@ -81,6 +83,10 @@ function initPlots(states) {
     },
     margin: {
       t: 15
+    },
+    yaxis: {
+      range: [0, 100],
+      hoverformat: ',d',
     }
   };
 
